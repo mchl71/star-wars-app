@@ -1,0 +1,7 @@
+.planetCardContainer {
+	border: 1px solid white;
+	margin: 10px;
+	padding: 10px;
+	background: rgba(31, 122, 98, 0.5);
+	border-radius: 25px;
+}

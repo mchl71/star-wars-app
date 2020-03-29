@@ -1,26 +1,37 @@
 import React from 'react';
-import logo from './logo.svg';
+import { connect } from 'react-redux'
+import PlanetList from './PlanetList'
 import './App.css';
+import { getPlanets } from './actions'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const mapStateToProps = (state) => {
+  return {
+    planets: state.planets,
+    isPending: state.isPending,
+    error: state.error
+  }
 }
 
-export default App;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onGetPlanets: () => dispatch(getPlanets())
+  }
+}
+
+class App extends React.Component {
+  render() {
+    const {onGetPlanets, planets, isPending} = this.props
+    return (
+        <div className="app">
+          <header>Star Wars Webapp</header>
+          <button type="button" onClick={onGetPlanets}>Planeten erzeugen</button>
+          {isPending ? 
+            <p>Loading ...</p> :
+            <PlanetList planets={planets} />
+          }
+        </div>
+      );
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
